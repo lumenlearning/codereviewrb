@@ -63,4 +63,20 @@ RSpec.describe :grader do
             expect(grader(question, choices, ["A", "C"])).to eq(0.5)
         end
     end
+
+    context "CLOZE_DRAG_AND_DROP" do
+        question = Question.new("CLOZE_DRAG_AND_DROP", "For {target1}, then {target2}.")
+        choices = [[
+            Choice.new("A", "A", true, 1),
+            Choice.new("B", "B", true, 2)
+        ]]
+
+        it("should return 1.0 if responses match correct choices in order") do
+            expect(grader(question, choices, ["A", "B"])).to eq(1.0)
+        end
+
+        it("should return 0.5 if responses are out of order") do
+            expect(grader(question, choices, ["B", "A"])).to eq(0.5)
+        end
+    end
 end
